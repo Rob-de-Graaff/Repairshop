@@ -1,0 +1,108 @@
+﻿@using Reparatieshop.Models
+@using Reparatieshop.Extensions
+@model IEnumerable<Assignment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <!-- #region Example Code -->
+    @*@foreach (var item in ViewBag.Status)
+        {
+            var s = item as string;
+            @s;
+        };*@
+    @*@Model.HoeveelheidKlaar()*@
+    <!-- #endregion -->
+    @ViewBag.Pending
+    @ViewBag.in_progress
+    @ViewBag.Waiting_for_parts
+    @ViewBag.Done
+</div>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<!-- #region Example code-->
+@*@using (Html.BeginForm())
+    {
+        <p>
+            Find by date: @Html.TextBoxFor("searchString", ViewBag.CurrentFilter as DateTime);
+                Find by date: @Html.TextBox("searchString");
+                <input type="submit" value="Search" />
+
+            Find by date: <input type="date" id="searchString" />
+            <input type="submit" value="Search" />
+        </p>
+    }*@
+<!-- #endregion -->
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.StartSortParam })
+        </th>
+        <th>
+            @Html.ActionLink("End Date", "Index", new { sortOrder = ViewBag.EndSortParam })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HoursWorked)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (System.DateTime.Now >= item.Start.Date && item.Status != Status.Done)
+                {
+                    <span class="red">@Html.DisplayFor(modelItem => item.Start)</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Start)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                @if (item.Status == Status.Done)
+                {
+                    <span class="green">@Html.DisplayFor(modelItem => item.Status)</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Status)
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoursWorked)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AssignmentId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AssignmentId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AssignmentId })
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.Hidden(DateTime.Now.ToString())
+
+@section scripts{
+    <script></script>
+}

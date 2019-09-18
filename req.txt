@@ -1,0 +1,30 @@
+Niveau 1 (Single Page Applicatie)
+
+- Aanmaken en verwijderen van reparatieopdrachten.
++ overzicht balk bovenaan de applicatie voor totaal aantal van iedere status
++ kolom voor geplande startdatum en einddatum van reparatie
+- Kolom rood kleuren als begindatum wordt overschreden
++ Status Toevoegen van de reparatie
+                (in afwachting, in behandeling, Wacht op onderdelen, Klaar)
++ Overzicht lijst van alle reparaties en de status in bijv. kleur
+
+ 
+
+Niveau 2 (WPF of ASP.Net)
+
++ Reparaties opslaan in een database
++ Omschrijving van wat de reparateur heeft gedaan
++ Details pagina van de reparatie toevoegen
+- Klanten toevoegen en koppelen aan reparaties
+- Reparateur toevoegen en koppelen aan reparaties
++ Gebruikte onderdelen toevoegen
+- Prijs toevoegen van de producten en arbeidsloon (totaalprijs berekenen)
+
+ 
+
+Niveau 3 (ASP.Net, Microsoft Identity )
+
+- Klanten kunnen inloggen en een Reparatie Aanmelden
+- Verschillende Views voor Gebruiker, Werknemer of Administrator
+- Klanten kunnen afbeeldingen toevoegen van bijv. Screenshots
+- Factuur laten genereren als de klant de pc komt ophalen
