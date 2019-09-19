@@ -19,15 +19,15 @@ namespace Reparatieshop.Controllers
             ViewBag.Status = Enum.GetNames(typeof(Status));
 
             IQueryable<Assignment> assignments;
-            
-                assignments = db.Assignments;
+
+            assignments = db.Assignments;
             var b = assignments.ToList();
 
             ViewBag.Pending = $"Pending: {assignments.Where(x => x.Status == Status.Pending).Count()}";
             ViewBag.in_progress = $"in progress: {assignments.Where(x => x.Status == Status.in_progress).Count()}";
             ViewBag.Waiting_for_parts = $"Waiting for parts: {assignments.Where(x => x.Status == Status.Waiting_for_parts).Count()}";
             ViewBag.Done = $"Done: {assignments.Where(x => x.Status == Status.Done).Count()}";
-            
+
 
             return View(b);
         }
@@ -50,6 +50,20 @@ namespace Reparatieshop.Controllers
         // GET: Assignment/Create
         public ActionResult Create()
         {
+            List<string> customers = new List<string>();
+            foreach (var customer in db.Customers)
+            {
+                customers.Add(customer.FirstName + " " + customer.LastName);
+            }
+
+            //List<int> customers = new List<int>();
+            //foreach (var item in db.Customers)
+            //{
+            //    customers.Add(item.CustomerId);
+            //}
+
+            ViewBag.Customers = customers;
+
             return View();
         }
 
@@ -62,12 +76,30 @@ namespace Reparatieshop.Controllers
         {
             if (ModelState.IsValid)
             {
+                Customer customer = IdentifyByName(Request.Form["CustomerId"]);
+                assignment.Customer = customer;
                 db.Assignments.Add(assignment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(assignment);
+        }
+
+        private Customer IdentifyByName(string name)
+        {
+            string firstName = name.Substring(0,name.IndexOf(' '));
+            string lastName = name.Substring(name.IndexOf(' ')+1, name.Length - (firstName.Length +1));
+            Customer customerSelected = new Customer();
+            foreach (var customer in db.Customers)
+            {
+                if (firstName == customer.FirstName && lastName == customer.LastName)
+                {
+                    customerSelected = customer;
+                    break;
+                }
+            }
+            return customerSelected;
         }
 
         // GET: Assignment/Edit/5
@@ -151,12 +183,6 @@ namespace Reparatieshop.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        //public ActionResult AssignmentList()
-        //{
-        //    List<Assignment> assignments = db.Assignments.ToList();
-        //    return View(assignments);
-        //}
 
         protected override void Dispose(bool disposing)
         {
