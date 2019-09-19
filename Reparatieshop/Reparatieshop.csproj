@@ -186,13 +186,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909101134546_Initialize.cs" />
-    <Compile Include="Migrations\201909101134546_Initialize.Designer.cs">
-      <DependentUpon>201909101134546_Initialize.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909160917017_Datepicker models.cs" />
-    <Compile Include="Migrations\201909160917017_Datepicker models.Designer.cs">
-      <DependentUpon>201909160917017_Datepicker models.cs</DependentUpon>
+    <Compile Include="Migrations\201909190939119_Initialize.cs" />
+    <Compile Include="Migrations\201909190939119_Initialize.Designer.cs">
+      <DependentUpon>201909190939119_Initialize.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -328,6 +324,7 @@
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Assignment\AddProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -346,11 +343,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909101134546_Initialize.resx">
-      <DependentUpon>201909101134546_Initialize.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909160917017_Datepicker models.resx">
-      <DependentUpon>201909160917017_Datepicker models.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909190939119_Initialize.resx">
+      <DependentUpon>201909190939119_Initialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

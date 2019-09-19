@@ -16,6 +16,12 @@ namespace Reparatieshop.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        [NotMapped]
+        public string FirstLastName { get
+            {
+                return $"{FirstName} {LastName}";
+            } }
+        [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime? DoB { get; set; }

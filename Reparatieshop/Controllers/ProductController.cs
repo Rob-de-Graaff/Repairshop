@@ -1,6 +1,7 @@
 ﻿using Reparatieshop.DAL;
 using Reparatieshop.Extensions;
 using Reparatieshop.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -58,7 +59,10 @@ namespace Reparatieshop.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
-            return View();
+            List<Assignment> assignments = db.Assignments.ToList();
+            ViewBag.Assignments = assignments;
+
+            return View(new Product());
         }
 
         // POST: Product/Create
@@ -70,6 +74,8 @@ namespace Reparatieshop.Controllers
         {
             if (ModelState.IsValid)
             {
+                Assignment assignment = db.Assignments.Find(Request.Form["AssignmentId"]);
+                product.Assignment = assignment;
                 product.Price = DoubleExtensions.ConvertInput(Request.Form["PriceTextbox"]);
                 db.Products.Add(product);
                 db.SaveChanges();

@@ -25,11 +25,11 @@ namespace Reparatieshop.Migrations
 
             List<Customer> customers = new List<Customer>
             {
-                new Customer{FirstName="A",LastName="A", City="A", Zipcode="A", HouseNumber=1},
-                new Customer{FirstName="B",LastName="B", City="B", Zipcode="B", HouseNumber=2},
-                new Customer{FirstName="C",LastName="C", City="C", Zipcode="C", HouseNumber=3},
-                new Customer{FirstName="D",LastName="D", City="D", Zipcode="D", HouseNumber=4},
-                new Customer{FirstName="E",LastName="E", City="E", Zipcode="E", HouseNumber=5}
+                new Customer{FirstName="Ad",LastName="A", DoB=DateTime.Now.Date, City="Amsterdam", Zipcode="A", HouseNumber=1},
+                new Customer{FirstName="Bert",LastName="B", DoB=DateTime.Now.Date, City="B", Zipcode="B", HouseNumber=2},
+                new Customer{FirstName="Clara",LastName="C", DoB=DateTime.Now.Date, City="C", Zipcode="C", HouseNumber=3},
+                new Customer{FirstName="Dave",LastName="D", DoB=DateTime.Now.Date, City="Den Bosch", Zipcode="D", HouseNumber=4},
+                new Customer{FirstName="Eef",LastName="E", DoB=DateTime.Now.Date, City="E", Zipcode="E", HouseNumber=5}
             };
 
             customers.ForEach(c => context.Customers.Add(c));
@@ -37,11 +37,11 @@ namespace Reparatieshop.Migrations
 
             IList<Repairer> repairers = new List<Repairer>();
 
-            repairers.Add(new Repairer() { FirstName = "F", LastName = "F", Wage = 14.70 });
-            repairers.Add(new Repairer() { FirstName = "G", LastName = "G", Wage = 14.70 });
-            repairers.Add(new Repairer() { FirstName = "H", LastName = "H", Wage = 14.70 });
-            repairers.Add(new Repairer() { FirstName = "I", LastName = "I", Wage = 14.70 });
-            repairers.Add(new Repairer() { FirstName = "J", LastName = "J", Wage = 14.70 });
+            repairers.Add(new Repairer() { FirstName = "F", LastName = "F", DoB = DateTime.Now.Date, Wage = 14.70 });
+            repairers.Add(new Repairer() { FirstName = "G", LastName = "G", DoB = DateTime.Now.Date, Wage = 14.70 });
+            repairers.Add(new Repairer() { FirstName = "H", LastName = "H", DoB = DateTime.Now.Date, Wage = 14.70 });
+            repairers.Add(new Repairer() { FirstName = "I", LastName = "I", DoB = DateTime.Now.Date, Wage = 14.70 });
+            repairers.Add(new Repairer() { FirstName = "J", LastName = "J", DoB = DateTime.Now.Date, Wage = 14.70 });
 
             context.Repairers.AddRange(repairers);
             context.SaveChanges();
@@ -65,7 +65,7 @@ namespace Reparatieshop.Migrations
             assignments.Add(new Assignment() { Start = new DateTime(2002, 03, 3), End = new DateTime(2003, 04, 4), Status = Status.Done, HoursWorked = 3 });
             assignments.Add(new Assignment() { Start = new DateTime(2003, 04, 4), End = new DateTime(2004, 05, 5), Status = Status.Waiting_for_parts, HoursWorked = 4 });
             assignments.Add(new Assignment() { Start = new DateTime(2004, 05, 5), End = new DateTime(2005, 06, 6), Status = Status.Done, HoursWorked = 5 });
-
+            
             context.Assignments.AddRange(assignments);
             context.SaveChanges();
         }

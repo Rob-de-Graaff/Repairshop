@@ -50,19 +50,10 @@ namespace Reparatieshop.Controllers
         // GET: Assignment/Create
         public ActionResult Create()
         {
-            List<string> customers = new List<string>();
-            foreach (var customer in db.Customers)
-            {
-                customers.Add(customer.FirstName + " " + customer.LastName);
-            }
-
-            //List<int> customers = new List<int>();
-            //foreach (var item in db.Customers)
-            //{
-            //    customers.Add(item.CustomerId);
-            //}
-
+            List<Customer> customers =  db.Customers.ToList();
             ViewBag.Customers = customers;
+            List<Repairer> repairers = db.Repairers.ToList();
+            ViewBag.Repairers = repairers;
 
             return View();
         }
@@ -76,30 +67,16 @@ namespace Reparatieshop.Controllers
         {
             if (ModelState.IsValid)
             {
-                Customer customer = IdentifyByName(Request.Form["CustomerId"]);
+                Customer customer = db.Customers.Find(Request.Form["CustomerId"]);
                 assignment.Customer = customer;
+                Repairer repairer = db.Repairers.Find(Request.Form["RepairerId"]);
+                assignment.Repairer = repairer;
                 db.Assignments.Add(assignment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(assignment);
-        }
-
-        private Customer IdentifyByName(string name)
-        {
-            string firstName = name.Substring(0,name.IndexOf(' '));
-            string lastName = name.Substring(name.IndexOf(' ')+1, name.Length - (firstName.Length +1));
-            Customer customerSelected = new Customer();
-            foreach (var customer in db.Customers)
-            {
-                if (firstName == customer.FirstName && lastName == customer.LastName)
-                {
-                    customerSelected = customer;
-                    break;
-                }
-            }
-            return customerSelected;
         }
 
         // GET: Assignment/Edit/5
@@ -191,6 +168,39 @@ namespace Reparatieshop.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult AddProduct(string returnUrl, int? AssignmentId)
+        {
+            IEnumerable<Product> getProducts = db.Products.ToList();
+            ViewBag.returnurl = returnUrl;
+            ViewBag.AssignmentId = AssignmentId;
+
+            return View(getProducts);
+
+        }
+
+        public ActionResult AddProducts(int? id, string returnUrl, int? AssignmentId)
+        {
+            if (id == null || AssignmentId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Product tempProduct = db.Products.ToList().Where(s => s.ProductId == id).FirstOrDefault();
+
+            if (tempProduct == null)
+            {
+                return HttpNotFound();
+            }
+
+            Assignment assignment = db.Assignments.Where(s => s.AssignmentId == AssignmentId).FirstOrDefault();
+
+            assignment.Products.Add(tempProduct);
+
+            db.Entry(assignment).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Redirect(returnUrl);
         }
     }
 }
