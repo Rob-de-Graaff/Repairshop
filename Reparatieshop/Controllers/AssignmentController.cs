@@ -21,15 +21,16 @@ namespace Reparatieshop.Controllers
             IQueryable<Assignment> assignments;
 
             assignments = db.Assignments;
-            var b = assignments.ToList();
 
             ViewBag.Pending = $"Pending: {assignments.Where(x => x.Status == Status.Pending).Count()}";
             ViewBag.in_progress = $"in progress: {assignments.Where(x => x.Status == Status.in_progress).Count()}";
             ViewBag.Waiting_for_parts = $"Waiting for parts: {assignments.Where(x => x.Status == Status.Waiting_for_parts).Count()}";
             ViewBag.Done = $"Done: {assignments.Where(x => x.Status == Status.Done).Count()}";
 
+            
 
-            return View(b);
+
+            return View(assignments.ToList());
         }
 
         // GET: Assignment/Details/5
@@ -44,7 +45,23 @@ namespace Reparatieshop.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.TotalCosts = CalculateCosts(assignment);
+
             return View(assignment);
+        }
+
+        private string CalculateCosts(Assignment selectedAssignment)
+        {
+            double totalCosts = 0.00d;
+
+            foreach (var product in selectedAssignment.Products)
+            {
+                totalCosts += product.Price;
+            }
+
+            totalCosts += selectedAssignment.Repairer.Wage * selectedAssignment.HoursWorked;
+            return string.Format("{0:N2}", totalCosts);
         }
 
         // GET: Assignment/Create
@@ -161,15 +178,6 @@ namespace Reparatieshop.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         public ActionResult AddProduct(string returnUrl, int? AssignmentId)
         {
             IEnumerable<Product> getProducts = db.Products.ToList();
@@ -201,6 +209,15 @@ namespace Reparatieshop.Controllers
             db.Entry(assignment).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return Redirect(returnUrl);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
