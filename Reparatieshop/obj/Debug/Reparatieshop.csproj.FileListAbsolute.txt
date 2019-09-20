@@ -108,4 +108,3 @@ D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.dll
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.pdb
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.Migrations.Initialize.resources
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.csproj.GenerateResource.cache
-D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.csprojAssemblyReference.cache

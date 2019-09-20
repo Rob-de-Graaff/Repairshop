@@ -27,9 +27,6 @@ namespace Reparatieshop.Controllers
             ViewBag.Waiting_for_parts = $"Waiting for parts: {assignments.Where(x => x.Status == Status.Waiting_for_parts).Count()}";
             ViewBag.Done = $"Done: {assignments.Where(x => x.Status == Status.Done).Count()}";
 
-            
-
-
             return View(assignments.ToList());
         }
 
@@ -61,16 +58,18 @@ namespace Reparatieshop.Controllers
             }
 
             totalCosts += selectedAssignment.Repairer.Wage * selectedAssignment.HoursWorked;
-            return string.Format("{0:N2}", totalCosts);
+
+            totalCosts = Math.Round(totalCosts, 2);
+            return string.Format("{0:C2}", totalCosts);
         }
 
         // GET: Assignment/Create
         public ActionResult Create()
         {
             List<Customer> customers =  db.Customers.ToList();
-            ViewBag.Customers = customers;
+            ViewBag.CustomersCreate = customers;
             List<Repairer> repairers = db.Repairers.ToList();
-            ViewBag.Repairers = repairers;
+            ViewBag.RepairersCreate = repairers;
 
             return View();
         }
@@ -108,6 +107,12 @@ namespace Reparatieshop.Controllers
             {
                 return HttpNotFound();
             }
+
+            List<Customer> customers = db.Customers.ToList();
+            ViewBag.CustomersEdit = customers;
+            List<Repairer> repairers = db.Repairers.ToList();
+            ViewBag.RepairersEdit = repairers;
+
             return View(assignment);
         }
 

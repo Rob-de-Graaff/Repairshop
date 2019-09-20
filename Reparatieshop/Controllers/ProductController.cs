@@ -59,8 +59,8 @@ namespace Reparatieshop.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
-            List<Assignment> assignments = db.Assignments.ToList();
-            ViewBag.Assignments = assignments;
+            //List<Assignment> assignments = db.Assignments.ToList();
+            //ViewBag.Assignments = assignments;
 
             return View(new Product());
         }
@@ -97,6 +97,10 @@ namespace Reparatieshop.Controllers
             {
                 return HttpNotFound();
             }
+
+            List<Assignment> assignments = db.Assignments.ToList();
+            ViewBag.AssignmentsEdit = assignments;
+
             return View(product);
         }
 
