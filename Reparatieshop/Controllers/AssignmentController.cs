@@ -1,4 +1,5 @@
 ﻿using Reparatieshop.DAL;
+using Reparatieshop.Extensions;
 using Reparatieshop.Models;
 using System;
 using System.Collections.Generic;
@@ -16,16 +17,18 @@ namespace Reparatieshop.Controllers
         // GET: Assignment
         public ActionResult Index(string sortOrder)
         {
-            ViewBag.Status = Enum.GetNames(typeof(Status));
+            #region Example Code
+            //ViewBag.Status = Enum.GetNames(typeof(Status));
+            #endregion
 
             IQueryable<Assignment> assignments;
 
             assignments = db.Assignments;
 
-            ViewBag.Pending = $"Pending: {assignments.Where(x => x.Status == Status.Pending).Count()}";
-            ViewBag.in_progress = $"in progress: {assignments.Where(x => x.Status == Status.in_progress).Count()}";
-            ViewBag.Waiting_for_parts = $"Waiting for parts: {assignments.Where(x => x.Status == Status.Waiting_for_parts).Count()}";
-            ViewBag.Done = $"Done: {assignments.Where(x => x.Status == Status.Done).Count()}";
+            ViewBag.Pending = $"Pending: {IntExtention.CalculateTotal(Status.Pending, assignments)}";
+            ViewBag.in_progress = $"in progress: {IntExtention.CalculateTotal(Status.in_progress, assignments)}";
+            ViewBag.Waiting_for_parts = $"Waiting for parts: {IntExtention.CalculateTotal(Status.Waiting_for_parts, assignments)}";
+            ViewBag.Done = $"Done: {IntExtention.CalculateTotal(Status.Done, assignments)}";
 
             return View(assignments.ToList());
         }
@@ -59,7 +62,6 @@ namespace Reparatieshop.Controllers
 
             totalCosts += selectedAssignment.Repairer.Wage * selectedAssignment.HoursWorked;
 
-            totalCosts = Math.Round(totalCosts, 2);
             return string.Format("{0:C2}", totalCosts);
         }
 

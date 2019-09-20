@@ -47,6 +47,7 @@
                     <th>Start</th>
                     <th>End</th>
                     <th>Status</th>
+                    <th>Description</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Products</th>
@@ -62,6 +63,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Customer.FirstName)

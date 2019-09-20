@@ -17,12 +17,11 @@
         };*@
     @*@Model.HoeveelheidKlaar()*@
     <!-- #endregion -->
-    @ViewBag.Pending
-    @ViewBag.in_progress
-    @ViewBag.Waiting_for_parts
-    @ViewBag.Done
+    <label>@ViewBag.Pending</label>
+    <label>@ViewBag.in_progress</label>
+    <label>@ViewBag.Waiting_for_parts</label>
+    <label>@ViewBag.Done</label>
 </div>
-
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -64,49 +63,34 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @if (System.DateTime.Now >= item.Start.Date && item.Status != Status.Done)
-            {
-                <span class="red">@Html.DisplayFor(modelItem => item.Start)</span>
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.Start)
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.End)
-        </td>
-        <td>
-            @if (item.Status == Status.Done)
-            {
-                <span class="green">@Html.DisplayFor(modelItem => item.Status)</span>
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.Status)
-            }
-
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HoursWorked)
-        </td>
-        <td>
-            @foreach (var product in item.Products)
-            {
-                @Html.DisplayFor(modelItem => product.Name)<br />
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.AssignmentId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.AssignmentId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.AssignmentId })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                <span class=@ColorExtension.CheckDate(item)>@Html.DisplayFor(modelItem => item.Start)</span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                <span class=@ColorExtension.CheckStatus(item)>@Html.DisplayFor(modelItem => item.Status)</span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoursWorked)
+            </td>
+            <td>
+                @foreach (var product in item.Products)
+                {
+                    @Html.DisplayFor(modelItem => product.Name)<br />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AssignmentId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AssignmentId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AssignmentId })
+            </td>
+        </tr>
     }
 </table>
 

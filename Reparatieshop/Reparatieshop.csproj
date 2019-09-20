@@ -181,8 +181,10 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RepairerController.cs" />
     <Compile Include="DAL\ShopContext.cs" />
+    <Compile Include="Extensions\ColorExtension.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\IntExtention.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
