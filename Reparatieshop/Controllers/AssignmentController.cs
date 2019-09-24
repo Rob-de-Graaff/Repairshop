@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Reparatieshop.Controllers
 {
+    [Authorize(Roles = "Custoemr, Repairer, Administrator")]
     public class AssignmentController : Controller
     {
         private ShopContext db = new ShopContext();

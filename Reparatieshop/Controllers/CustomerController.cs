@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Reparatieshop.Controllers
 {
+    [Authorize(Roles = "Customer, Administrator")]
     public class CustomerController : Controller
     {
         private ShopContext db = new ShopContext();
@@ -77,6 +78,7 @@ namespace Reparatieshop.Controllers
         }
 
         // GET: Customer/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -86,6 +88,7 @@ namespace Reparatieshop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CustomerId,FirstName,LastName,DoB,City,Street,Zipcode,HouseNumber")] Customer customer)
         {

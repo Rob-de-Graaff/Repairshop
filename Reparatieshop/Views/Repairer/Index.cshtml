@@ -6,9 +6,12 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 @using (Html.BeginForm())
 {
     <p>
@@ -49,9 +52,16 @@
                 @Html.DisplayFor(modelItem => item.Wage)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.RepairerId }) |
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RepairerId })<div>|</div>
+                }
                 @Html.ActionLink("Details", "Details", new { id = item.RepairerId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.RepairerId })
+
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RepairerId })
+                }
             </td>
         </tr>
     }

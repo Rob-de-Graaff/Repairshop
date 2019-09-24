@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Reparatieshop.Controllers
 {
+    [Authorize(Roles ="Repairer, Administrator")]
     public class RepairerController : Controller
     {
         private ShopContext db = new ShopContext();

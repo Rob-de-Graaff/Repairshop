@@ -1,5 +1,7 @@
 namespace Reparatieshop.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Reparatieshop.Models;
     using System;
     using System.Collections.Generic;
@@ -25,11 +27,11 @@ namespace Reparatieshop.Migrations
 
             List<Customer> customers = new List<Customer>
             {
-                new Customer{FirstName="Ad",LastName="A", DoB=DateTime.Now.Date, City="Amsterdam", Zipcode="A", HouseNumber=1},
-                new Customer{FirstName="Bert",LastName="B", DoB=DateTime.Now.Date, City="B", Zipcode="B", HouseNumber=2},
-                new Customer{FirstName="Clara",LastName="C", DoB=DateTime.Now.Date, City="C", Zipcode="C", HouseNumber=3},
-                new Customer{FirstName="Dave",LastName="D", DoB=DateTime.Now.Date, City="Den Bosch", Zipcode="D", HouseNumber=4},
-                new Customer{FirstName="Eef",LastName="E", DoB=DateTime.Now.Date, City="E", Zipcode="E", HouseNumber=5}
+                new Customer{FirstName="Ad",LastName="A", DoB=DateTime.Parse("1990-12-01"), City="Amsterdam", Zipcode="A", HouseNumber=1},
+                new Customer{FirstName="Bert",LastName="B", DoB=DateTime.Parse("1980-09-01"), City="B", Zipcode="B", HouseNumber=2},
+                new Customer{FirstName="Clara",LastName="C", DoB=DateTime.Parse("2000-05-01"), City="C", Zipcode="C", HouseNumber=3},
+                new Customer{FirstName="Dave",LastName="D", DoB=DateTime.Parse("1993-07-01"), City="Den Bosch", Zipcode="D", HouseNumber=4},
+                new Customer{FirstName="Eef",LastName="E", DoB=DateTime.Parse("1985-09-10"), City="E", Zipcode="E", HouseNumber=5}
             };
 
             customers.ForEach(c => context.Customers.Add(c));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -17,15 +18,29 @@ namespace Reparatieshop.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
         }
 
         public ApplicationSignInManager SignInManager
@@ -120,6 +135,7 @@ namespace Reparatieshop.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
+
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
@@ -136,15 +152,31 @@ namespace Reparatieshop.Controllers
 
         //
         // GET: /Account/Register
+        //[Authorize(Roles = "Administrator")]
         [AllowAnonymous]
         public ActionResult Register()
         {
+            List<SelectListItem> list = new List<SelectListItem>();
+            if (User.IsInRole("Administrator"))
+            {
+                foreach (var role in RoleManager.Roles)
+                {
+                    list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+                }
+            }
+            else
+            {
+                var role = RoleManager.Roles.Where(r => r.Name == "Customer").FirstOrDefault();
+                list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+            }
+            ViewBag.Roles = list;
             return View();
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
+        //[Authorize(Roles ="Administrator")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
@@ -153,10 +185,11 @@ namespace Reparatieshop.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (result.Succeeded && !User.IsInRole("Administrator"))
                 {
+                    result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRoleID);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

@@ -23,5 +23,7 @@ namespace Reparatieshop.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public System.Data.Entity.DbSet<Reparatieshop.Models.AdminViewModel> AdminViewModels { get; set; }
     }
 }

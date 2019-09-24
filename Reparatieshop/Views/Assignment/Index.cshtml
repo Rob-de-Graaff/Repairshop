@@ -23,9 +23,12 @@
     <label>@ViewBag.Done</label>
 </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <!-- #region Example code-->
 @*@using (Html.BeginForm())
     {
@@ -86,9 +89,15 @@
                 }
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.AssignmentId }) |
+                @if (true)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AssignmentId })<div>|</div>
+                }
                 @Html.ActionLink("Details", "Details", new { id = item.AssignmentId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.AssignmentId })
+                @if (true)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.AssignmentId })
+                }
             </td>
         </tr>
     }

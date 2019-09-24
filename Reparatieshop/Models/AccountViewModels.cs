@@ -62,6 +62,12 @@ namespace Reparatieshop.Models
         public bool RememberMe { get; set; }
     }
 
+    //public class RoleViewModel
+    //{
+    //    public string ID { get; set; }
+    //    public string Name { get; set; }
+    //}
+
     public class RegisterViewModel
     {
         [Required]
@@ -79,6 +85,12 @@ namespace Reparatieshop.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        //[Required]
+        //[Display(Name = "Account Type")]
+        //public List<ApplicationRole> Roles { get; set; }
+        [Display(Name = "Account Type")]
+        public string SelectedRoleID { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -6,4 +6,8 @@ Add-Migration -configuration <DbContext-Migrations-Configuration-Class-with-Name
 
 Add-Migration -configuration:Reparatieshop.Migrations.Configuration "Initialize"
 
+Add-Migration -Configuration Reparatieshop.ASPMigrations.Configuration "Init"
+
 Update-Database -configuration:Reparatieshop.Migrations.Configuration
+
+update-database -Configuration Reparatieshop.ASPMigrations.Configuration

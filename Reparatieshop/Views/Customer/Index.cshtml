@@ -8,9 +8,12 @@
 
 <h2>Customers</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
 {
     <p>
@@ -69,16 +72,23 @@
                 @Html.DisplayFor(modelItem => item.HouseNumber)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId })<div>|</div>
+                }
                 @Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId })
+
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId })
+                }
             </td>
         </tr>
     }
 
 </table>
 @*<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
