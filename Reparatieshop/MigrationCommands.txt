@@ -2,11 +2,15 @@
 
 enable-migrations -ContextTypeName:Reparatieshop.DAL.ShopContext -MigrationsDirectory:Migrations
 
+
 Add-Migration -configuration <DbContext-Migrations-Configuration-Class-with-Namespaces> <Migrations-Name>
 
 Add-Migration -configuration:Reparatieshop.Migrations.Configuration "Initialize"
 
 Add-Migration -Configuration Reparatieshop.ASPMigrations.Configuration "Init"
+
+
+Update-Database -configuration <DbContext-Migrations-Configuration-Class-with-Namespaces> -Verbose
 
 Update-Database -configuration:Reparatieshop.Migrations.Configuration
 

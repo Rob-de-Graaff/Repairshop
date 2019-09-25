@@ -206,11 +206,11 @@
     <Compile Include="Migrations\201909241319253_date.Designer.cs">
       <DependentUpon>201909241319253_date.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\ReparatieshopMigrations\201909190939119_Initialize.cs" />
-    <Compile Include="Migrations\ReparatieshopMigrations\201909190939119_Initialize.Designer.cs">
+    <Compile Include="Migrations\201909190939119_Initialize.cs" />
+    <Compile Include="Migrations\201909190939119_Initialize.Designer.cs">
       <DependentUpon>201909190939119_Initialize.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\ReparatieshopMigrations\Configuration.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Assignment.cs" />
@@ -273,6 +273,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\msi.jpg" />
     <Content Include="Login Info.txt" />
     <Content Include="MigrationCommands.txt" />
     <Content Include="Scripts\bootstrap.js" />
@@ -382,7 +384,7 @@
     <EmbeddedResource Include="Migrations\201909241319253_date.resx">
       <DependentUpon>201909241319253_date.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ReparatieshopMigrations\201909190939119_Initialize.resx">
+    <EmbeddedResource Include="Migrations\201909190939119_Initialize.resx">
       <DependentUpon>201909190939119_Initialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

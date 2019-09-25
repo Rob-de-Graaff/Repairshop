@@ -23,10 +23,11 @@ textarea {
     max-width: 280px;
 }
 
-.red{
-    color: #f00;
-}
-
-.green{
-    color: green;
+.image {
+    background: url("Images/msi.jpg");
+    background-repeat: no-repeat;
+    background-position: right top;
+    display: block;
+    height: 50px;
+    width: 50px;
 }
