@@ -24,9 +24,9 @@ textarea {
 }
 
 .image {
-    background: url("Images/msi.jpg");
+    background: url(../Images/logo.png);
     background-repeat: no-repeat;
-    background-position: right top;
+    /*background-position: right top;*/
     display: block;
     height: 50px;
     width: 50px;

@@ -4,12 +4,13 @@ using Reparatieshop.Models;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Reparatieshop.Controllers
 {
     [Authorize(Roles ="Repairer, Administrator")]
-    public class RepairerController : Controller
+    public class RepairerController : BaseController
     {
         private ShopContext db = new ShopContext();
 
@@ -71,15 +72,35 @@ namespace Reparatieshop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RepairerId,FirstName,LastName,DoB,Wage")] Repairer repairer)
+        public async Task<ActionResult> Create([Bind(Include = "Email,Password,ConfirmPassword,FirstName,LastName,DoB,Wage")] RegisterRepairerViewModel repairer)
         {
-            if (ModelState.IsValid)
+            try
             {
-                repairer.Wage = DoubleExtensions.ConvertInput(Request.Form["WageTextbox"]);
-                db.Repairers.Add(repairer);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var user = new ApplicationUser { UserName = repairer.Email, Email = repairer.Email };
+                    var result = await UserManager.CreateAsync(user, repairer.Password);
+
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        await UserManager.AddToRoleAsync(user.Id, "Repairer");
+
+                        repairer.RepairerId = user.Id;
+                        db.Repairers.Add(new Repairer(repairer));
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
             }
 
             return View(repairer);

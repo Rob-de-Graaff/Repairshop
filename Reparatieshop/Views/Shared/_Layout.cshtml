@@ -18,18 +18,13 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @Html.ActionLink(" ", "Index", "Home", null, new { style = "background: url('" + Url.Content("~/Images/logo.png") + "') no-repeat center; display:block; height:50px; width:50px;" })
+                @*@Html.ActionLink(" ", "Index", "Home", null, new { style = "background: url('" + Url.Content("~/Images/logo.png") + "') no-repeat center; display:block; height:50px; width:50px;" })*@
 
-                @*@Html.ActionLink("Reparatieshop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-
-                @*<img src="~/Images/msi.jpg" class="image" height="50" width="50" />*@
-
-                @*@Html.ActionLink(" ", "Index", "Home", null, new { @class = "image" })*@
+                @Html.ActionLink(" ", "Index", "Home", null, new { @class = "image" })
 
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
                     <li>@Html.ActionLink("Customer", "Index", "Customer")</li>
                     <li>@Html.ActionLink("Repairer", "Index", "Repairer")</li>
                     <li>@Html.ActionLink("Assignment", "Index", "Assignment")</li>

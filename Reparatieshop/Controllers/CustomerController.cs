@@ -1,17 +1,26 @@
 ﻿using PagedList;
 using Reparatieshop.DAL;
 using Reparatieshop.Models;
-using System;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Reparatieshop.Controllers
 {
     [Authorize(Roles = "Customer, Administrator")]
-    public class CustomerController : Controller
+    public class CustomerController : BaseController
     {
+        public CustomerController() : base()
+        {
+        }
+
+        public CustomerController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
+            : base(userManager, signInManager, roleManager)
+        {
+        }
+
         private ShopContext db = new ShopContext();
 
         // GET: Customer
@@ -20,7 +29,7 @@ namespace Reparatieshop.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.LastNameSortParm = string.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
             ViewBag.FirstNameSortParm = sortOrder == "firstname_asc" ? "firstname_desc" : "firstname_asc";
-            
+
             if (searchString != null)
             {
                 page = 1;
@@ -78,7 +87,7 @@ namespace Reparatieshop.Controllers
         }
 
         // GET: Customer/Create
-        [Authorize(Roles = "Administrator")]
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
@@ -88,16 +97,28 @@ namespace Reparatieshop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerId,FirstName,LastName,DoB,City,Street,Zipcode,HouseNumber")] Customer customer)
+        public async Task<ActionResult> Create([Bind(Include = "Email,Password,ConfirmPassword,FirstName,LastName,DoB,City,Street,Zipcode,HouseNumber")] RegisterCustomerViewModel customer)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Customers.Add(customer);
-                    db.SaveChanges();
+                    var user = new ApplicationUser { UserName = customer.Email, Email = customer.Email };
+                    var result = await UserManager.CreateAsync(user, customer.Password);
+
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        await UserManager.AddToRoleAsync(user.Id, "Customer");
+
+                        customer.CustomerId = user.Id;
+                        db.Customers.Add(new Customer(customer));
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", "Home");
+                    }
                     return RedirectToAction("Index");
                 }
             }

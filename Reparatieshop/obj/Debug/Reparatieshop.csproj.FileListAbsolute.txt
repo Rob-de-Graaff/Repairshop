@@ -102,14 +102,11 @@ D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\bin\Microsoft.Owin.Security.Tw
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\bin\Microsoft.Owin.Security.OAuth.xml
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.ASPMigrations.Initialize.resources
+D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.Migrations.Initialize.resources
+D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.csproj.GenerateResource.cache
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.csproj.CoreCompileInputs.cache
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.csproj.CopyComplete
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.dll
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.pdb
-D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.Migrations.Initialize.resources
-D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.csproj.GenerateResource.cache
-D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.ASPMigrations.InitialCreate.resources
-D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.ASPMigrations.initial.resources
-D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.ASPMigrations.EditRoleSeed.resources
-D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.Migrations.date.resources
 D:\MSI_BU\ITVitae\Web\Reparatieshop\Reparatieshop\obj\Debug\Reparatieshop.csprojAssemblyReference.cache

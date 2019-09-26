@@ -173,22 +173,15 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="ASPMigrations\201909190938586_InitialCreate.cs" />
-    <Compile Include="ASPMigrations\201909190938586_InitialCreate.Designer.cs">
-      <DependentUpon>201909190938586_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ASPMigrations\201909231027179_initial.cs" />
-    <Compile Include="ASPMigrations\201909231027179_initial.Designer.cs">
-      <DependentUpon>201909231027179_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ASPMigrations\201909231037451_EditRoleSeed.cs" />
-    <Compile Include="ASPMigrations\201909231037451_EditRoleSeed.Designer.cs">
-      <DependentUpon>201909231037451_EditRoleSeed.cs</DependentUpon>
+    <Compile Include="ASPMigrations\201909261012490_Initialize.cs" />
+    <Compile Include="ASPMigrations\201909261012490_Initialize.Designer.cs">
+      <DependentUpon>201909261012490_Initialize.cs</DependentUpon>
     </Compile>
     <Compile Include="ASPMigrations\Configuration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AssignmentController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -202,13 +195,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909241319253_date.cs" />
-    <Compile Include="Migrations\201909241319253_date.Designer.cs">
-      <DependentUpon>201909241319253_date.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909190939119_Initialize.cs" />
-    <Compile Include="Migrations\201909190939119_Initialize.Designer.cs">
-      <DependentUpon>201909190939119_Initialize.cs</DependentUpon>
+    <Compile Include="Migrations\201909261011363_Initialize.cs" />
+    <Compile Include="Migrations\201909261011363_Initialize.Designer.cs">
+      <DependentUpon>201909261011363_Initialize.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -357,6 +346,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -372,20 +362,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ASPMigrations\201909190938586_InitialCreate.resx">
-      <DependentUpon>201909190938586_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="ASPMigrations\201909261012490_Initialize.resx">
+      <DependentUpon>201909261012490_Initialize.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ASPMigrations\201909231027179_initial.resx">
-      <DependentUpon>201909231027179_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ASPMigrations\201909231037451_EditRoleSeed.resx">
-      <DependentUpon>201909231037451_EditRoleSeed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909241319253_date.resx">
-      <DependentUpon>201909241319253_date.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909190939119_Initialize.resx">
-      <DependentUpon>201909190939119_Initialize.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909261011363_Initialize.resx">
+      <DependentUpon>201909261011363_Initialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

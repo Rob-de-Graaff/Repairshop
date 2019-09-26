@@ -10,8 +10,22 @@ namespace Reparatieshop.Models
     [Table("Repairers")]
     public class Repairer
     {
+        public Repairer()
+        {
+
+        }
+
+        public Repairer(RegisterRepairerViewModel rvm)
+        {
+            this.RepairerId = rvm.RepairerId;
+            this.FirstName = rvm.FirstName;
+            this.LastName = rvm.LastName;
+            this.DoB = rvm.DoB;
+            this.Wage = rvm.Wage;
+        }
+
         [Key]
-        public int RepairerId { get; set; }
+        public string RepairerId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -30,5 +44,25 @@ namespace Reparatieshop.Models
         public double Wage { get; set; }
 
         public virtual ICollection<Assignment> Assignments { get; set; }
+    }
+
+    [NotMapped]
+    public class RegisterRepairerViewModel : Repairer
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }
