@@ -173,9 +173,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="ASPMigrations\201909261012490_Initialize.cs" />
-    <Compile Include="ASPMigrations\201909261012490_Initialize.Designer.cs">
-      <DependentUpon>201909261012490_Initialize.cs</DependentUpon>
+    <Compile Include="ASPMigrations\201909271613589_Init.cs" />
+    <Compile Include="ASPMigrations\201909271613589_Init.Designer.cs">
+      <DependentUpon>201909271613589_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="ASPMigrations\Configuration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -195,9 +195,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909261011363_Initialize.cs" />
-    <Compile Include="Migrations\201909261011363_Initialize.Designer.cs">
-      <DependentUpon>201909261011363_Initialize.cs</DependentUpon>
+    <Compile Include="Migrations\201909271613298_Initialize.cs" />
+    <Compile Include="Migrations\201909271613298_Initialize.Designer.cs">
+      <DependentUpon>201909271613298_Initialize.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -362,11 +362,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ASPMigrations\201909261012490_Initialize.resx">
-      <DependentUpon>201909261012490_Initialize.cs</DependentUpon>
+    <EmbeddedResource Include="ASPMigrations\201909271613589_Init.resx">
+      <DependentUpon>201909271613589_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909261011363_Initialize.resx">
-      <DependentUpon>201909261011363_Initialize.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909271613298_Initialize.resx">
+      <DependentUpon>201909271613298_Initialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

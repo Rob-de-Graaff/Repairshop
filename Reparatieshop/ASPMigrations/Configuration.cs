@@ -25,24 +25,24 @@ namespace Reparatieshop.ASPMigrations
             //var userStore = new UserStore<ApplicationUser>(context);
             //var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var roleStore = new RoleStore<IdentityRole>(context);
-            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            //var roleStore = new RoleStore<IdentityRole>(context);
+            //var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-            var applicationRoleAdministrator = new ApplicationRole { Name = "Administrator" };
-            var applicationRoleCustomer = new ApplicationRole { Name = "Customer" };
-            var applicationRoleRepairer = new ApplicationRole { Name = "Repairer" };
-            if (!roleManager.RoleExists(applicationRoleAdministrator.Name))
-            {
-                roleManager.Create(applicationRoleAdministrator);
-            }
-            if (!roleManager.RoleExists(applicationRoleCustomer.Name))
-            {
-                roleManager.Create(applicationRoleCustomer);
-            }
-            if (!roleManager.RoleExists(applicationRoleRepairer.Name))
-            {
-                roleManager.Create(applicationRoleRepairer);
-            }
+            //var applicationRoleAdministrator = new ApplicationRole { Name = "Administrator" };
+            //var applicationRoleCustomer = new ApplicationRole { Name = "Customer" };
+            //var applicationRoleRepairer = new ApplicationRole { Name = "Repairer" };
+            //if (!roleManager.RoleExists(applicationRoleAdministrator.Name))
+            //{
+            //    roleManager.Create(applicationRoleAdministrator);
+            //}
+            //if (!roleManager.RoleExists(applicationRoleCustomer.Name))
+            //{
+            //    roleManager.Create(applicationRoleCustomer);
+            //}
+            //if (!roleManager.RoleExists(applicationRoleRepairer.Name))
+            //{
+            //    roleManager.Create(applicationRoleRepairer);
+            //}
 
             //string[] roles = new string[] { "Administrator", "Customer", "Repairer" };
             //foreach (string role in roles)
@@ -56,101 +56,8 @@ namespace Reparatieshop.ASPMigrations
             //userManager.Create(admin, "12#$abCD");
             //userManager.AddToRole(admin.Id, "Administrator");
 
-            if (!context.Users.Any(u => u.UserName == "admin@email.nl"))
-            {
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var user = new ApplicationUser { UserName = "admin@email.nl", Email = "admin@email.nl" };
-                userManager.Create(user, "12#$abCD");
-                userManager.AddToRole(user.Id, "Administrator");
-            }
+            
 
-            if (!context.Users.Any(u => u.UserName == "testcust1@email.nl"))
-            {
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var user = new ApplicationUser { UserName = "testcust1@email.nl", Email = "testcust1@email.nl" };
-                userManager.Create(user, "23#$abCD");
-                userManager.AddToRole(user.Id, "Customer");
-                using (ShopContext shopContext = new ShopContext())
-                {
-                    shopContext.Customers.Add(new Customer 
-                    { 
-                        CustomerId = user.Id, 
-                        FirstName = "Ad", 
-                        LastName = "A", 
-                        DoB = DateTime.Parse("1990-12-01"), 
-                        City = "Amsterdam", 
-                        Zipcode = "A", 
-                        HouseNumber = 1 
-                        });
-                    shopContext.SaveChanges();
-                }
-            }
-
-            if (!context.Users.Any(u => u.UserName == "testcust2@email.nl"))
-            {
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var user = new ApplicationUser { UserName = "testcust2@email.nl", Email = "testcust2@email.nl" };
-                userManager.Create(user, "34#$abCD");
-                userManager.AddToRole(user.Id, "Customer");
-                using (ShopContext shopContext = new ShopContext())
-                {
-                    shopContext.Customers.Add(new Customer
-                    {
-                        CustomerId = user.Id,
-                        FirstName = "Bert",
-                        LastName = "B",
-                        DoB = DateTime.Parse("1980-09-01"),
-                        City = "B",
-                        Zipcode = "B",
-                        HouseNumber = 2
-                    });
-                    shopContext.SaveChanges();
-                }
-            }
-
-            if (!context.Users.Any(u => u.UserName == "testrep1@email.nl"))
-            {
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var user = new ApplicationUser { UserName = "testrep1@email.nl", Email = "testrep1@email.nl" };
-                userManager.Create(user, "56#$abCD");
-                userManager.AddToRole(user.Id, "Repairer");
-                using (ShopContext shopContext = new ShopContext())
-                {
-                    shopContext.Customers.Add(new Customer
-                    {
-                        CustomerId = user.Id,
-                        FirstName = "Frans",
-                        LastName = "F",
-                        DoB = DateTime.Parse("1985-11-15"),
-                        City = "F",
-                        Zipcode = "F",
-                        HouseNumber = 1
-                    });
-                    shopContext.SaveChanges();
-                }
-            }
-
-            if (!context.Users.Any(u => u.UserName == "testrep2@email.nl"))
-            {
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var user = new ApplicationUser { UserName = "testrep2@email.nl", Email = "testrep2@email.nl" };
-                userManager.Create(user, "67#$abCD");
-                userManager.AddToRole(user.Id, "Repairer");
-                using (ShopContext shopContext = new ShopContext())
-                {
-                    shopContext.Customers.Add(new Customer
-                    {
-                        CustomerId = user.Id,
-                        FirstName = "Gerard",
-                        LastName = "G",
-                        DoB = DateTime.Parse("1993-10-02"),
-                        City = "G",
-                        Zipcode = "G",
-                        HouseNumber = 2
-                    });
-                    shopContext.SaveChanges();
-                }
-            }
             //var appuser1 = 
             //userManager.Create(appuser1, "12#$abCD");
             //var appuser2 = new ApplicationUser { UserName = "testcust2@email.nl", Email = "testcust2@email.nl" };
