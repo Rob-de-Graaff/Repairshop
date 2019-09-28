@@ -76,6 +76,7 @@ namespace Reparatieshop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Email,Password,ConfirmPassword,FirstName,LastName,DoB,Wage")] RegisterRepairerViewModel repairer)
         {
+            repairer.SelectedRoleID = "Repairer";
             try
             {
                 if (ModelState.IsValid)
@@ -85,6 +86,7 @@ namespace Reparatieshop.Controllers
 
                     if (result.Succeeded)
                     {
+                        result = await UserManager.AddToRoleAsync(user.Id, repairer.SelectedRoleID);
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         await UserManager.AddToRoleAsync(user.Id, "Repairer");
 
@@ -97,10 +99,10 @@ namespace Reparatieshop.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (System.Exception)
+            catch (DataException Dex)
             {
-
-                throw;
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                return View("Error", new HandleErrorInfo(Dex, "Repairer", "Create"));
             }
 
             return View(repairer);

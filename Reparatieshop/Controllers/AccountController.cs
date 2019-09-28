@@ -116,18 +116,20 @@ namespace Reparatieshop.Controllers
         public ActionResult Register()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            if (User.IsInRole("Administrator"))
-            {
-                foreach (var role in RoleManager.Roles)
-                {
-                    list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
-                }
-            }
-            else
-            {
-                var role = RoleManager.Roles.Where(r => r.Name == "Customer").FirstOrDefault();
-                list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
-            }
+            //if (User.IsInRole("Administrator"))
+            //{
+            //    foreach (var role in RoleManager.Roles)
+            //    {
+            //        list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+            //    }
+            //}
+            //else
+            //{
+            //    var role = RoleManager.Roles.Where(r => r.Name == "Customer").FirstOrDefault();
+            //    list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+            //}
+            var role = RoleManager.Roles.Where(r => r.Name == "Administrator").FirstOrDefault();
+            list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
             ViewBag.Roles = list;
             return View();
         }
@@ -135,11 +137,12 @@ namespace Reparatieshop.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        //[Authorize(Roles ="Administrator")]
-        [AllowAnonymous]
+        [Authorize(Roles ="Administrator")]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            model.SelectedRoleID = "Administrator";
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };

@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using Reparatieshop.DAL;
 using Reparatieshop.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -101,6 +102,7 @@ namespace Reparatieshop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Email,Password,ConfirmPassword,FirstName,LastName,DoB,City,Street,Zipcode,HouseNumber")] RegisterCustomerViewModel customer)
         {
+            customer.SelectedRoleID = "Customer";
             try
             {
                 if (ModelState.IsValid)
@@ -110,6 +112,7 @@ namespace Reparatieshop.Controllers
 
                     if (result.Succeeded)
                     {
+                        result = await UserManager.AddToRoleAsync(user.Id, customer.SelectedRoleID);
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         await UserManager.AddToRoleAsync(user.Id, "Customer");
 
@@ -122,10 +125,11 @@ namespace Reparatieshop.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (DataException)
+            catch (DataException Dex)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                return View("Error", new HandleErrorInfo(Dex, "Customer", "Create"));
             }
             return View(customer);
         }

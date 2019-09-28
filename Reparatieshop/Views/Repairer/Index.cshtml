@@ -6,12 +6,6 @@
 
 <h2>Index</h2>
 
-@if (User.IsInRole("Administrator"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
 @using (Html.BeginForm())
 {
     <p>

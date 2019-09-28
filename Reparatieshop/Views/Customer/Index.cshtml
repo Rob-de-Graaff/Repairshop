@@ -8,12 +8,6 @@
 
 <h2>Customers</h2>
 
-@if (User.IsInRole("Administrator"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
 @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
 {
     <p>
