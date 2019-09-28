@@ -1,4 +1,5 @@
-﻿using PagedList;
+﻿using Microsoft.AspNet.Identity;
+using PagedList;
 using Reparatieshop.DAL;
 using Reparatieshop.Models;
 using System.Collections.Generic;
@@ -27,49 +28,59 @@ namespace Reparatieshop.Controllers
         // GET: Customer
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.LastNameSortParm = string.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
-            ViewBag.FirstNameSortParm = sortOrder == "firstname_asc" ? "firstname_desc" : "firstname_asc";
-
-            if (searchString != null)
+            if (User.IsInRole("Administrator"))
             {
-                page = 1;
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.LastNameSortParm = string.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
+                ViewBag.FirstNameSortParm = sortOrder == "firstname_asc" ? "firstname_desc" : "firstname_asc";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
+                IQueryable<Customer> customers = db.Customers;
+                //var customers = from c in db.Customers select c;
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    customers = customers.Where(c => c.LastName.Contains(searchString)
+                                           || c.FirstName.Contains(searchString));
+                }
+                switch (sortOrder)
+                {
+                    case "lastname_desc":
+                        customers = customers.OrderByDescending(c => c.LastName);
+                        break;
+
+                    case "firstname_asc":
+                        customers = customers.OrderBy(c => c.FirstName);
+                        break;
+
+                    case "firstname_desc":
+                        customers = customers.OrderByDescending(c => c.FirstName);
+                        break;
+
+                    default:
+                        customers = customers.OrderBy(c => c.LastName);
+                        break;
+                }
+                //int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                //return View(customers.ToPagedList(pageNumber, pageSize));
+                return View(customers.ToPagedList(pageNumber, customers.Count()));
             }
             else
             {
-                searchString = currentFilter;
+                var custId = User.Identity.GetUserId();
+                var customers = db.Customers.Where(c => c.CustomerId == custId);
+                return View(customers);
             }
-
-            ViewBag.CurrentFilter = searchString;
-
-            var customers = from c in db.Customers
-                            select c;
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                customers = customers.Where(c => c.LastName.Contains(searchString)
-                                       || c.FirstName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "lastname_desc":
-                    customers = customers.OrderByDescending(c => c.LastName);
-                    break;
-
-                case "firstname_asc":
-                    customers = customers.OrderBy(c => c.FirstName);
-                    break;
-
-                case "firstname_desc":
-                    customers = customers.OrderByDescending(c => c.FirstName);
-                    break;
-
-                default:
-                    customers = customers.OrderBy(c => c.LastName);
-                    break;
-            }
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(customers.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Customer/Details/5

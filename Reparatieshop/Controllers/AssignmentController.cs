@@ -1,4 +1,5 @@
-﻿using Reparatieshop.DAL;
+﻿using Microsoft.AspNet.Identity;
+using Reparatieshop.DAL;
 using Reparatieshop.Extensions;
 using Reparatieshop.Models;
 using System;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Reparatieshop.Controllers
 {
-    [Authorize(Roles = "Custoemr, Repairer, Administrator")]
+    [Authorize(Roles = "Customer, Repairer, Administrator")]
     public class AssignmentController : Controller
     {
         private ShopContext db = new ShopContext();
@@ -18,13 +19,20 @@ namespace Reparatieshop.Controllers
         // GET: Assignment
         public ActionResult Index(string sortOrder)
         {
+            IQueryable<Assignment> assignments;
             #region Example Code
             //ViewBag.Status = Enum.GetNames(typeof(Status));
             #endregion
 
-            IQueryable<Assignment> assignments;
-
-            assignments = db.Assignments;
+            if (User.IsInRole("Administrator") || User.IsInRole("Repairer"))
+            {
+                assignments = db.Assignments;
+            }
+            else
+            {
+                string userId = User.Identity.GetUserId();
+                assignments = db.Assignments.Where(a => a.Customer.CustomerId == userId);
+            }
 
             ViewBag.Pending = $"Pending: {IntExtention.CalculateTotal(Status.Pending, assignments)}";
             ViewBag.in_progress = $"in progress: {IntExtention.CalculateTotal(Status.in_progress, assignments)}";

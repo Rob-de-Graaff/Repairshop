@@ -115,22 +115,6 @@ namespace Reparatieshop.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            List<SelectListItem> list = new List<SelectListItem>();
-            //if (User.IsInRole("Administrator"))
-            //{
-            //    foreach (var role in RoleManager.Roles)
-            //    {
-            //        list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
-            //    }
-            //}
-            //else
-            //{
-            //    var role = RoleManager.Roles.Where(r => r.Name == "Customer").FirstOrDefault();
-            //    list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
-            //}
-            var role = RoleManager.Roles.Where(r => r.Name == "Administrator").FirstOrDefault();
-            list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
-            ViewBag.Roles = list;
             return View();
         }
 

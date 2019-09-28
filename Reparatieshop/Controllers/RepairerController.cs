@@ -1,6 +1,7 @@
 ﻿using Reparatieshop.DAL;
 using Reparatieshop.Extensions;
 using Reparatieshop.Models;
+using PagedList;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -15,12 +16,24 @@ namespace Reparatieshop.Controllers
         private ShopContext db = new ShopContext();
 
         // GET: Repairer
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.LastNameSortParm = string.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
             ViewBag.FirstNameSortParm = sortOrder == "firstname_asc" ? "firstname_desc" : "firstname_asc";
-            var repairers = from r in db.Repairers
-                            select r;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            IQueryable<Repairer> repairers = db.Repairers;
+            //var repairers = from r in db.Repairers select r;
             if (!string.IsNullOrEmpty(searchString))
             {
                 repairers = repairers.Where(r => r.LastName.Contains(searchString)
@@ -44,7 +57,10 @@ namespace Reparatieshop.Controllers
                     repairers = repairers.OrderBy(r => r.LastName);
                     break;
             }
-            return View(repairers.ToList());
+            //int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            //return View(repairers.ToPagedList(pageNumber, pageSize));
+            return View(repairers.ToPagedList(pageNumber, repairers.Count()));
         }
 
         // GET: Repairer/Details/5

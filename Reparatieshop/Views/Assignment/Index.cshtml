@@ -8,20 +8,24 @@
 
 <h2>Index</h2>
 
-<div>
-    <!-- #region Example Code -->
-    @*@foreach (var item in ViewBag.Status)
-        {
-            var s = item as string;
-            @s;
-        };*@
-    @*@Model.HoeveelheidKlaar()*@
-    <!-- #endregion -->
-    <label>@ViewBag.Pending</label>
-    <label>@ViewBag.in_progress</label>
-    <label>@ViewBag.Waiting_for_parts</label>
-    <label>@ViewBag.Done</label>
-</div>
+@if (User.IsInRole("Administrator") || User.IsInRole("Repairer"))
+{
+    <div>
+        <!-- #region Example Code -->
+        @*@foreach (var item in ViewBag.Status)
+            {
+                var s = item as string;
+                @s;
+            };*@
+        @*@Model.HoeveelheidKlaar()*@
+        <!-- #endregion -->
+        <label>@ViewBag.Pending</label>
+        <label>@ViewBag.in_progress</label>
+        <label>@ViewBag.Waiting_for_parts</label>
+        <label>@ViewBag.Done</label>
+    </div>
+}
+
 
 @if (User.IsInRole("Administrator"))
 {
@@ -89,12 +93,12 @@
                 }
             </td>
             <td>
-                @if (true)
+                @if (User.IsInRole("Administrator"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.AssignmentId })<div>|</div>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AssignmentId })
                 }
-                @Html.ActionLink("Details", "Details", new { id = item.AssignmentId }) |
-                @if (true)
+                | @Html.ActionLink("Details", "Details", new { id = item.AssignmentId }) |
+                @if (User.IsInRole("Administrator"))
                 {
                     @Html.ActionLink("Delete", "Delete", new { id = item.AssignmentId })
                 }

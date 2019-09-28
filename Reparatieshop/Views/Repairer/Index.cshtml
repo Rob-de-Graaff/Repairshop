@@ -6,12 +6,15 @@
 
 <h2>Index</h2>
 
-@using (Html.BeginForm())
+@if (User.IsInRole("Administrator"))
 {
-    <p>
-        Find by name: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
+    using (Html.BeginForm())
+    {
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
 }
 <table class="table">
     <tr>
@@ -48,9 +51,9 @@
             <td>
                 @if (User.IsInRole("Administrator"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RepairerId })<div>|</div>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RepairerId })
                 }
-                @Html.ActionLink("Details", "Details", new { id = item.RepairerId }) |
+                | @Html.ActionLink("Details", "Details", new { id = item.RepairerId }) |
 
                 @if (User.IsInRole("Administrator"))
                 {

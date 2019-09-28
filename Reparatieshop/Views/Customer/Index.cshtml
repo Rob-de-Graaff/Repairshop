@@ -8,12 +8,15 @@
 
 <h2>Customers</h2>
 
-@using (Html.BeginForm("Index", "Customer", FormMethod.Get))
+@if (User.IsInRole("Administrator"))
 {
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
+    using (Html.BeginForm("Index", "Customer", FormMethod.Get))
+    {
+        <p>
+            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
+    }
 }
 <table class="table">
     <tr>
@@ -68,9 +71,9 @@
             <td>
                 @if (User.IsInRole("Administrator"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId })<div>|</div>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId })
                 }
-                @Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |
+                | @Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |
 
                 @if (User.IsInRole("Administrator"))
                 {
