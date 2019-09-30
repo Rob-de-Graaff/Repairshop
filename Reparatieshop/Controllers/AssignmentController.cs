@@ -2,7 +2,6 @@
 using Reparatieshop.DAL;
 using Reparatieshop.Extensions;
 using Reparatieshop.Models;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -19,16 +18,19 @@ namespace Reparatieshop.Controllers
         // GET: Assignment
         public ActionResult Index(string sortOrder)
         {
-            IQueryable<Assignment> assignments;
+            IQueryable<Assignment> assignments = db.Assignments;
+
             #region Example Code
+
             //ViewBag.Status = Enum.GetNames(typeof(Status));
-            #endregion
+
+            #endregion Example Code
 
             if (User.IsInRole("Administrator") || User.IsInRole("Repairer"))
             {
                 assignments = db.Assignments;
             }
-            else
+            else if (User.IsInRole("Customer"))
             {
                 string userId = User.Identity.GetUserId();
                 assignments = db.Assignments.Where(a => a.Customer.CustomerId == userId);
@@ -55,29 +57,15 @@ namespace Reparatieshop.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.TotalCosts = CalculateCosts(assignment);
+            ViewBag.TotalCosts = StringExtension.CalculateCosts(assignment);
 
             return View(assignment);
-        }
-
-        private string CalculateCosts(Assignment selectedAssignment)
-        {
-            double totalCosts = 0.00d;
-
-            foreach (var product in selectedAssignment.Products)
-            {
-                totalCosts += product.Price;
-            }
-
-            totalCosts += selectedAssignment.Repairer.Wage * selectedAssignment.HoursWorked;
-
-            return string.Format("{0:C2}", totalCosts);
         }
 
         // GET: Assignment/Create
         public ActionResult Create()
         {
-            List<Customer> customers =  db.Customers.ToList();
+            List<Customer> customers = db.Customers.ToList();
             ViewBag.CustomersCreate = customers;
             List<Repairer> repairers = db.Repairers.ToList();
             ViewBag.RepairersCreate = repairers;
@@ -201,7 +189,6 @@ namespace Reparatieshop.Controllers
             ViewBag.AssignmentId = AssignmentId;
 
             return View(getProducts);
-
         }
 
         public ActionResult AddProducts(int? id, string returnUrl, int? AssignmentId)

@@ -20,6 +20,7 @@ namespace Reparatieshop.ASPMigrations
 
         protected override void Seed(Reparatieshop.Models.ApplicationDbContext context)
         {
+            #region sample code
             //ShopContext shopContext = new ShopContext();
 
             //var userStore = new UserStore<ApplicationUser>(context);
@@ -56,7 +57,7 @@ namespace Reparatieshop.ASPMigrations
             //userManager.Create(admin, "12#$abCD");
             //userManager.AddToRole(admin.Id, "Administrator");
 
-            
+
 
             //var appuser1 = 
             //userManager.Create(appuser1, "12#$abCD");
@@ -173,7 +174,7 @@ namespace Reparatieshop.ASPMigrations
             //    shopContext.Assignments.AddRange(assignments);
             //    shopContext.SaveChanges();
             //}
-
+            #endregion
         }
     }
 }

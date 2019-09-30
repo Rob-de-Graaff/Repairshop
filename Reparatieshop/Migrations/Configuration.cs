@@ -20,6 +20,7 @@ namespace Reparatieshop.Migrations
 
         protected override void Seed(Reparatieshop.DAL.ShopContext context)
         {
+            #region Sample code
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -97,6 +98,7 @@ namespace Reparatieshop.Migrations
 
             //context.Assignments.AddRange(assignments);
             //context.SaveChanges();
+            #endregion
         }
     }
 }

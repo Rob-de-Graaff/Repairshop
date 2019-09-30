@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Reparatieshop.Controllers
 {
@@ -32,8 +33,11 @@ namespace Reparatieshop.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            IQueryable<Repairer> repairers = db.Repairers;
+            #region example code
             //var repairers = from r in db.Repairers select r;
+            #endregion
+            IQueryable<Repairer> repairers = db.Repairers;
+            
             if (!string.IsNullOrEmpty(searchString))
             {
                 repairers = repairers.Where(r => r.LastName.Contains(searchString)
@@ -57,6 +61,7 @@ namespace Reparatieshop.Controllers
                     repairers = repairers.OrderBy(r => r.LastName);
                     break;
             }
+            // did not implement using PagedList;
             //int pageSize = 3;
             int pageNumber = (page ?? 1);
             //return View(repairers.ToPagedList(pageNumber, pageSize));
@@ -97,8 +102,8 @@ namespace Reparatieshop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = new ApplicationUser { UserName = repairer.Email, Email = repairer.Email };
-                    var result = await UserManager.CreateAsync(user, repairer.Password);
+                    ApplicationUser user = new ApplicationUser { UserName = repairer.Email, Email = repairer.Email };
+                    IdentityResult result = await UserManager.CreateAsync(user, repairer.Password);
 
                     if (result.Succeeded)
                     {
@@ -152,7 +157,7 @@ namespace Reparatieshop.Controllers
             }
             Repairer repairerToUpdate = db.Repairers.Find(id);
 
-            repairerToUpdate.Wage = DoubleExtensions.ConvertInput(Request.Form["WageTextbox"]);
+            repairerToUpdate.Wage = DoubleExtension.ConvertInput(Request.Form["WageTextbox"]);
 
             if (TryUpdateModel(repairerToUpdate, "", new string[] { "RepairerId", "FirstName", "LastName", "DoB", "Wage" }))
             {
@@ -162,10 +167,10 @@ namespace Reparatieshop.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (DataException /* dex */)
+                catch (DataException Dex)
                 {
-                    //Log the error (uncomment dex variable name and add a line here to write a log.
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    return View("Error", new HandleErrorInfo(Dex, "Repairer", "EditPost"));
                 }
             }
             return View(repairerToUpdate);

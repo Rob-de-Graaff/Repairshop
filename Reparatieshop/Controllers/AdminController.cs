@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.Owin;
+using Reparatieshop.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity.Owin;
-using Reparatieshop.Models;
 
 namespace Reparatieshop.Controllers
 {
@@ -39,7 +37,7 @@ namespace Reparatieshop.Controllers
         public ActionResult Index()
         {
             List<AdminViewModel> listRoles = new List<AdminViewModel>();
-            foreach (var role in RoleManager.Roles)
+            foreach (ApplicationRole role in RoleManager.Roles)
             {
                 listRoles.Add(new AdminViewModel(role));
             }
@@ -54,40 +52,40 @@ namespace Reparatieshop.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(AdminViewModel model)
         {
-            var role = new ApplicationRole() { Name = model.Name};
+            ApplicationRole role = new ApplicationRole() { Name = model.Name };
             await RoleManager.CreateAsync(role);
             return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Edit(string id)
         {
-            var role = await RoleManager.FindByIdAsync(id);
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);
             return View(new AdminViewModel(role));
         }
 
         [HttpPost]
         public async Task<ActionResult> Edit(AdminViewModel model)
         {
-            var role = new ApplicationRole() { Id = model.Id,Name = model.Name };
+            ApplicationRole role = new ApplicationRole() { Id = model.Id, Name = model.Name };
             await RoleManager.UpdateAsync(role);
             return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Details(string id)
         {
-            var role = await RoleManager.FindByIdAsync(id);
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);
             return View(new AdminViewModel(role));
         }
 
         public async Task<ActionResult> Delete(string id)
         {
-            var role = await RoleManager.FindByIdAsync(id);
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);
             return View(new AdminViewModel(role));
         }
 
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            var role = await RoleManager.FindByIdAsync(id);
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);
             await RoleManager.DeleteAsync(role);
             return RedirectToAction("Index");
         }

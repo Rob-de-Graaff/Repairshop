@@ -19,7 +19,7 @@ namespace Reparatieshop.Controllers
         {
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.PriceSortParm = sortOrder == "price_asc" ? "price_desc" : "price_asc";
-            var products = from p in db.Products
+            IQueryable<Product> products = from p in db.Products
                            select p;
             switch (sortOrder)
             {
@@ -60,8 +60,10 @@ namespace Reparatieshop.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
+            #region sample code
             //List<Assignment> assignments = db.Assignments.ToList();
             //ViewBag.Assignments = assignments;
+            #endregion
 
             return View(new Product());
         }
@@ -77,7 +79,7 @@ namespace Reparatieshop.Controllers
             {
                 Assignment assignment = db.Assignments.Find(Request.Form["AssignmentId"]);
                 product.Assignment = assignment;
-                product.Price = DoubleExtensions.ConvertInput(Request.Form["PriceTextbox"]);
+                product.Price = DoubleExtension.ConvertInput(Request.Form["PriceTextbox"]);
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -118,7 +120,7 @@ namespace Reparatieshop.Controllers
             }
             Product productToUpdate = db.Products.Find(id);
 
-            productToUpdate.Price = DoubleExtensions.ConvertInput(Request.Form["PriceTextbox"]);
+            productToUpdate.Price = DoubleExtension.ConvertInput(Request.Form["PriceTextbox"]);
 
             if (TryUpdateModel(productToUpdate, "", new string[] { "ProductId", "Name", "Price" }))
             {
@@ -128,10 +130,10 @@ namespace Reparatieshop.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (DataException /* dex */)
+                catch (DataException Dex)
                 {
-                    //Log the error (uncomment dex variable name and add a line here to write a log.
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    return View("Error", new HandleErrorInfo(Dex, "Product", "EditPost"));
                 }
             }
             return View(productToUpdate);

@@ -2,7 +2,6 @@
 using PagedList;
 using Reparatieshop.DAL;
 using Reparatieshop.Models;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -45,8 +44,10 @@ namespace Reparatieshop.Controllers
 
                 ViewBag.CurrentFilter = searchString;
 
+                #region example code
+                //IQueryable<Customer> customers = from c in db.Customers select c;
+                #endregion
                 IQueryable<Customer> customers = db.Customers;
-                //var customers = from c in db.Customers select c;
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     customers = customers.Where(c => c.LastName.Contains(searchString)
@@ -70,6 +71,7 @@ namespace Reparatieshop.Controllers
                         customers = customers.OrderBy(c => c.LastName);
                         break;
                 }
+                // did not implement using PagedList;
                 //int pageSize = 3;
                 int pageNumber = (page ?? 1);
                 //return View(customers.ToPagedList(pageNumber, pageSize));
@@ -77,8 +79,8 @@ namespace Reparatieshop.Controllers
             }
             else
             {
-                var custId = User.Identity.GetUserId();
-                var customers = db.Customers.Where(c => c.CustomerId == custId);
+                string custId = User.Identity.GetUserId();
+                IQueryable<Customer> customers = db.Customers.Where(c => c.CustomerId == custId);
                 return View(customers);
             }
         }
@@ -118,8 +120,8 @@ namespace Reparatieshop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = new ApplicationUser { UserName = customer.Email, Email = customer.Email };
-                    var result = await UserManager.CreateAsync(user, customer.Password);
+                    ApplicationUser user = new ApplicationUser { UserName = customer.Email, Email = customer.Email };
+                    IdentityResult result = await UserManager.CreateAsync(user, customer.Password);
 
                     if (result.Succeeded)
                     {
@@ -138,7 +140,6 @@ namespace Reparatieshop.Controllers
             }
             catch (DataException Dex)
             {
-                //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                 return View("Error", new HandleErrorInfo(Dex, "Customer", "Create"));
             }
@@ -180,10 +181,10 @@ namespace Reparatieshop.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (DataException /* dex */)
+                catch (DataException Dex)
                 {
-                    //Log the error (uncomment dex variable name and add a line here to write a log.
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    return View("Error", new HandleErrorInfo(Dex, "Customer", "EditPost"));
                 }
             }
             return View(customerToUpdate);
@@ -219,7 +220,7 @@ namespace Reparatieshop.Controllers
                 db.Customers.Remove(customer);
                 db.SaveChanges();
             }
-            catch (DataException/* dex */)
+            catch (DataException /*Dex*/)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 return RedirectToAction("Delete", new { id = id, saveChangesError = true });
