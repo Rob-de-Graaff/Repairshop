@@ -19,10 +19,11 @@
             };*@
         @*@Model.HoeveelheidKlaar()*@
         <!-- #endregion -->
-        <label>@ViewBag.Pending</label>
-        <label>@ViewBag.in_progress</label>
-        <label>@ViewBag.Waiting_for_parts</label>
-        <label>@ViewBag.Done</label>
+
+        @Html.Label((string)@ViewBag.Pending, new { @class = "top-overview status-color-gray" })
+        @Html.Label((string)@ViewBag.in_progress, new { @class = "top-overview status-color-orange" })
+        @Html.Label((string)@ViewBag.Waiting_for_parts, new { @class = "top-overview  status-color-yellow" })
+        @Html.Label((string)@ViewBag.Done, new { @class = "top-overview status-color-blue" })
     </div>
 }
 

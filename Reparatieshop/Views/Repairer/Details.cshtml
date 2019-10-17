@@ -41,51 +41,52 @@
         <dd>
             @Html.DisplayFor(model => model.Wage)
         </dd>
-        <dd>
-            <table class="table">
+
+        <h4>Assignment Details</h4>
+
+        <table class="table-detail">
+            <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Products</th>
+            </tr>
+            @foreach (var item in Model.Assignments)
+            {
                 <tr>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Status</th>
-                    <th>Description</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Products</th>
-                </tr>
-                @foreach (var item in Model.Assignments)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Start)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.End)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Customer.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Customer.LastName)
-                        </td>
-                        <td>
-                            @foreach (var product in item.Products)
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Start)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.End)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.LastName)
+                    </td>
+                    <td>
+                        @foreach (var product in item.Products)
+                        {
+                            if (product != null)
                             {
-                                if (product != null)
-                                {
-                                    @Html.DisplayFor(modelitem => product.Name);
-                                }
+                                @Html.DisplayFor(modelitem => product.Name);
                             }
-                        </td>
-                    </tr>
-                }
-            </table>
-        </dd>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
     </dl>
 </div>
 <p>

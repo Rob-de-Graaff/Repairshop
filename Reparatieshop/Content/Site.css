@@ -23,6 +23,40 @@ textarea {
     max-width: 280px;
 }
 
+.top-overview {
+    margin: 20px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.status-color-blue{
+    color : white;
+    background-color : blue;
+}
+
+.status-color-orange {
+    color: black;
+    background-color: orange;
+}
+
+.status-color-yellow {
+    color: black;
+    background-color: yellow;
+}
+
+.status-color-gray {
+    color: black;
+    background-color: gray;
+}
+
+.validate-red {
+    color: red;
+}
+
+.validate-green {
+    color: lawngreen;
+}
+
 .image {
     background: url(../Images/logo.png);
     background-repeat: no-repeat;
@@ -31,3 +65,24 @@ textarea {
     height: 50px;
     width: 50px;
 }
+
+.table-detail {
+    margin-top: 15px;
+    width: 100%;
+    
+}
+
+    .table-detail th {
+        border: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 5px;
+    }
+
+    .table-detail td {
+        border: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 5px;
+    }
+

@@ -66,40 +66,43 @@
             @Html.DisplayFor(model => model.HouseNumber)
         </dd>
 
-        <dd>
-            <table class="table">
+        <h4>Assignment Details</h4>
+
+        <table class="table-detail">
+            <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Status</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            @foreach (var item in Model.Assignments)
+            {
                 <tr>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Status</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Start)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.End)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Repairer.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Repairer.LastName)
+                    </td>
                 </tr>
-                @foreach (var item in Model.Assignments)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Start)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.End)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Repairer.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Repairer.LastName)
-                        </td>
-                    </tr>
-                }
-            </table>
-        </dd
+            }
+        </table>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerId })
+    }
+    | @Html.ActionLink("Back to List", "Index")
 </p>

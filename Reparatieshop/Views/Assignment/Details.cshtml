@@ -49,29 +49,30 @@
         <dd>
             @Html.DisplayFor(model => model.HoursWorked)
         </dd>
-        <dd>
-            <table class="table">
+
+        <h4>Product Details</h4>
+
+        <table class="table-detail">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Used at assignment</th>
+            </tr>
+            @foreach (var item in Model.Products)
+            {
                 <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Used at assignment</th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)<br />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)<br />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Assignment.Description)<br />
+                    </td>
                 </tr>
-                @foreach (var item in Model.Products)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)<br />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)<br />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Assignment.Description)<br />
-                        </td>
-                    </tr>
-                }
-            </table>
-        </dd>
+            }
+        </table>
     </dl>
 </div>
 
@@ -80,6 +81,9 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AssignmentId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.AssignmentId })
+    }
+    | @Html.ActionLink("Back to List", "Index")
 </p>

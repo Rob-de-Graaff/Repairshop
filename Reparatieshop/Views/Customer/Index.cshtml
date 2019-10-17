@@ -69,6 +69,7 @@
                 @Html.DisplayFor(modelItem => item.HouseNumber)
             </td>
             <td>
+                @Html.HiddenFor(modelitem => item.CustomerId)
                 @if (User.IsInRole("Administrator"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId })

@@ -14,7 +14,7 @@ namespace Reparatieshop.Extensions
 
             if (DateTime.Now >= assignment.Start.Date && assignment.Status != Status.Done)
             {
-                color = "red";
+                color = "validate-red";
             }
             return color;
         }
@@ -25,7 +25,7 @@ namespace Reparatieshop.Extensions
 
             if (assignment.Status == Status.Done)
             {
-                color = "green";
+                color = "validate-green";
             }
             return color;
         }

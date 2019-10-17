@@ -86,7 +86,7 @@ namespace Reparatieshop.Controllers
         }
 
         // GET: Customer/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -147,7 +147,7 @@ namespace Reparatieshop.Controllers
         }
 
         // GET: Customer/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
